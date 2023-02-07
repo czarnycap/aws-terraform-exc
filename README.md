@@ -7,3 +7,5 @@ Terraform &amp; AWS excercises
 * setup network
 * apply best security practices
 * ^ all above on TF
+### REQUIREMENTS
+* 2 availability zones
