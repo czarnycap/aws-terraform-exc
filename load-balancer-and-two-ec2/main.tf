@@ -42,15 +42,6 @@ EOF
 
 }
 
-# resource "aws_network_interface_sg_attachment" "sg_attachment" {
-#   security_group_id    = "sg-0633becb08e8d5d03"
-#   network_interface_id = aws_instance.nginx_server.*.primary_network_interface_id
-# }
-
-
-
-
-
 resource "aws_elb" "nginx_elb" {
     name = "nginx-elb"
     security_groups = [ "sg-0633becb08e8d5d03" ]
