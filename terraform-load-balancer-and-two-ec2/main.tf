@@ -13,6 +13,7 @@ provider "aws" {
   region  = "eu-central-1"
 }
 
+## retrieve previously defined (via web) security group id
 data "aws_security_group" "ssh-http-sg" {
   id = "sg-0633becb08e8d5d03"
 }
@@ -30,6 +31,8 @@ resource "aws_instance" "nginx_server" {
     Name = "nginx-instance"
   }
 
+## script to install and provide content to nginx server which actually shows hostname of EC2
+
 user_data = <<-EOF
 #!/bin/bash
 amazon-linux-extras install -y nginx1
@@ -42,6 +45,7 @@ EOF
 
 }
 
+## security group and subnets defined previously via web
 resource "aws_elb" "nginx_elb" {
     name = "nginx-elb"
     security_groups = [ "sg-0633becb08e8d5d03" ]
@@ -56,6 +60,8 @@ resource "aws_elb" "nginx_elb" {
   instances = aws_instance.nginx_server.*.id
 
 }
+
+## to test run curl or open web browser and paste load balancer DNS name
 
 output "elb_dns_name" {
     value = aws_elb.nginx_elb.dns_name
